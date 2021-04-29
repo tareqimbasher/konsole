@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Konsole</AssemblyName>
+    <Authors>Tareq Imbasher</Authors>
+    <Company>Meccasoft, LLC</Company>
+    <Description>A light-weight wrapper and utility for System.Console</Description>
+    <PackageTags>console,System.Console,konsole,console wrapper,console color,color console,color,utility</PackageTags>
+    <PackageReleaseNotes>First release.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/tareqimbasher/konsole</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tareqimbasher/konsole</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
