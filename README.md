@@ -1,4 +1,4 @@
-# <img align="left" width="48" height="48" src="https://github.com/tareqimbasher/konsole/blob/asks/docs/icon-128.png?raw=true"> Konsole
+# <img align="left" width="48" height="48" src="https://github.com/tareqimbasher/konsole/blob/main/docs/icon-128.png?raw=true"> Konsole
 
 A light-weight System.Console utility wrapper for .NET.
 
@@ -224,7 +224,7 @@ console.Write("Left aligned").WriteLineAlignRight("Right aligned");
 
 This results in the following output:
 
-![preview-output-formatting](https://github.com/tareqimbasher/konsole/blob/asks/docs/preview-output-formatting.png?raw=true)
+![preview-output-formatting](https://github.com/tareqimbasher/konsole/blob/main/docs/preview-output-formatting.png?raw=true)
 
 #### Prompts
 
@@ -246,7 +246,7 @@ console
 
 This results in the following output:
 
-![preview-prompts](https://github.com/tareqimbasher/konsole/blob/asks/docs/preview-prompts.png?raw=true)
+![preview-prompts](https://github.com/tareqimbasher/konsole/blob/main/docs/preview-prompts.png?raw=true)
 
 
 #### Progress Bars
@@ -302,4 +302,4 @@ private void Work(ProgressBar progressBar, int progressDuration)
 
 This results in the following output:
 
-![preview-progressbars](https://github.com/tareqimbasher/konsole/blob/asks/docs/preview-progressbars.gif?raw=true)
+![preview-progressbars](https://github.com/tareqimbasher/konsole/blob/main/docs/preview-progressbars.gif?raw=true)
