@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     /// <summary>
     /// A utility wrapper of the <see cref="Console"/>.

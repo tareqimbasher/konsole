@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Konsole.ProgressBars
+namespace KonsoleDotNet.ProgressBars
 {
     public class ProgressBarGroup
     {

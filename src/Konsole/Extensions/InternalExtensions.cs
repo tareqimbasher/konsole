@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     internal static class InternalExtensions
     {

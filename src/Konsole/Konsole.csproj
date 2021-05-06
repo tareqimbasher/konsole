@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -17,6 +17,7 @@
     <PackageIcon>icon-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/tareqimbasher/konsole</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <RootNamespace>KonsoleDotNet</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     public interface IKonsole
     {

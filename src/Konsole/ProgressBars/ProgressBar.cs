@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Konsole.ProgressBars
+namespace KonsoleDotNet.ProgressBars
 {
     public class ProgressBar
     {

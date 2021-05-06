@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     /// <summary>
     /// Represents the default settings of a <see cref="Konsole"/> instance.

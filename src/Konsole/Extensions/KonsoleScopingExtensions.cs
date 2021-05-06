@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     public static class KonsoleScopingExtensions
     {

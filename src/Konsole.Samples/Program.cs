@@ -1,11 +1,11 @@
-﻿using Konsole.ProgressBars;
+﻿using KonsoleDotNet.ProgressBars;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Konsole.Samples
+namespace KonsoleDotNet.Samples
 {
     class Program
     {

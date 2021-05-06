@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     public static class KonsoleExtensions
     {

@@ -1,8 +1,8 @@
-﻿using Konsole.ProgressBars;
+﻿using KonsoleDotNet.ProgressBars;
 using System;
 using System.Collections.Generic;
 
-namespace Konsole
+namespace KonsoleDotNet
 {
     public static class ProgressBarExtensions
     {

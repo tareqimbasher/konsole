@@ -1,4 +1,4 @@
-﻿namespace Konsole
+﻿namespace KonsoleDotNet
 {
     public interface IKonsoleScope : IKonsole
     {
