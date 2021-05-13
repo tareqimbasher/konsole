@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security;
+using System.Text;
 
 namespace KonsoleDotNet
 {
@@ -58,7 +60,7 @@ namespace KonsoleDotNet
         }
 
         /// <summary>
-        /// Writes the specified collection of strings to the console in an unordered list format.
+        /// Writes the specified collection of strings to the console in a bullet list format.
         /// </summary>
         /// <param name="list">List to write.</param>
         /// <param name="bullet">A string representing the bullet symbol.</param>
@@ -159,9 +161,57 @@ namespace KonsoleDotNet
         /// </summary>
         public static string ReadLine(this IKonsole _) => Console.ReadLine();
 
+        /// <summary>
+        /// Read user input with the ability to execute an action on each key press and the ability to transform user input.
+        /// </summary>
+        /// <param name="onKeyDown">A function to execute after each key entered by the user. It should return a <see cref="bool"></see> that indicates
+        /// if the method should continue to receive input from the user or should stop and return the collected input.
+        /// If <see langword="null"/> is passed, user input will end when the user hits ENTER.</param>
+        /// <param name="transform">A function to execute after each key entered by the user that returns a string indicating the character that input key should be transformed into.
+        /// If <see langword="null"/> is passed, user input will not be transformed.</param>
+        public static string Read(this IKonsole konsole, Func<ConsoleKeyInfo, bool> onKeyDown = null, Func<ConsoleKeyInfo, string> transform = null)
+        {
+            if (onKeyDown == null)
+                onKeyDown = _ => _.Key != ConsoleKey.Enter;
 
-        public static string Ask(this IKonsole konsole, string question) => Ask<string>(konsole, question);
+            if (transform == null)
+                transform = _ => _.KeyChar.ToString();
 
+            ConsoleKeyInfo keyInfo;
+            var input = new StringBuilder();
+
+            do
+            {
+                keyInfo = konsole.ReadKey(intercept: true);
+
+                if (keyInfo.Key == ConsoleKey.Backspace && input.Length > 0)
+                {
+                    konsole.Write("\b \b");
+                    input.Remove(input.Length - 1, 1);
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    string c = transform(keyInfo);
+
+                    if (!string.IsNullOrEmpty(c))
+                    {
+                        konsole.Write(c);
+                        input.Append(c);
+                    }
+                }
+            }
+            while (onKeyDown(keyInfo));
+
+            return input.ToString();
+        }
+
+
+
+        /// <summary>
+        /// Ask user for input and convert input to <typeparamref name="TReturn"/>.
+        /// </summary>
+        /// <typeparam name="TReturn">The type to convert user input into.</typeparam>
+        /// <param name="question">The text to display to user.</param>
         public static TReturn Ask<TReturn>(this IKonsole konsole, string question)
         {
             var cursorInitialPosition = Console.CursorTop;
@@ -195,11 +245,33 @@ namespace KonsoleDotNet
             return default;
         }
 
+        /// <summary>
+        /// Ask user for input, returned as a string.
+        /// </summary>
+        /// <param name="question">The text to display to user.</param>
+        public static string Ask(this IKonsole konsole, string question) => Ask<string>(konsole, question);
+
+
+        /// <summary>
+        /// Ask user to select from a group of options.
+        /// </summary>
+        /// <param name="question">The text to display to user.</param>
+        /// <param name="options">Options the user must select from.</param>
         public static IEnumerable<string> Ask(this IKonsole konsole, string question, IEnumerable<string> options)
             => Ask(konsole, question, options, x => x);
 
+        /// <summary>
+        /// Ask user to select from a group of options.
+        /// </summary>
+        /// <param name="question">The text to display to user.</param>
+        /// <param name="options">Options the user must select from.</param>
+        /// <param name="optionFormatter">A function that returns a string representation of each option.</param>
+        /// <returns></returns>
         public static IEnumerable<T> Ask<T>(this IKonsole konsole, string question, IEnumerable<T> options, Func<T, string> optionFormatter)
         {
+            if (optionFormatter == null)
+                throw new ArgumentNullException(nameof(optionFormatter));
+
             int cursorInitialPosition = Console.CursorTop;
             var optionsArr = options.ToArray();
             List<T> selected = new List<T>();
@@ -291,6 +363,11 @@ namespace KonsoleDotNet
             return selected;
         }
 
+
+        /// <summary>
+        /// Ask user to yes/no question with no default answer.
+        /// </summary>
+        /// <param name="text">The text to display to user.</param>
         public static bool Confirm(this IKonsole konsole, string text)
         {
             var cursorInitialPosition = Console.CursorTop;
@@ -313,6 +390,11 @@ namespace KonsoleDotNet
             return false;
         }
 
+        /// <summary>
+        /// Ask user to yes/no question with a default answer.
+        /// </summary>
+        /// <param name="text">The text to display to user.</param>
+        /// <param name="defaultAnswer">The default answer if the user hits ENTER without specifying an answer.</param>
         public static bool Confirm(this IKonsole konsole, string text, bool defaultAnswer)
         {
             var cursorInitialPosition = Console.CursorTop;
@@ -336,6 +418,63 @@ namespace KonsoleDotNet
             }
 
             return false;
+        }
+
+
+
+        /// <summary>
+        /// Ask user for password input.
+        /// </summary>
+        /// <param name="showMask">If <see langword="true"/>, will show a '*' for each character the user inputs. If <see langword="false"/>, user input is hidden.</param>
+        public static string Password(this IKonsole konsole, bool showMask = false)
+        {
+            StringBuilder password = new StringBuilder();
+
+            Password(konsole, showMask, c => password.Append(c), () => password = password.Remove(password.Length - 1, 1));
+
+            return password.ToString();
+        }
+
+        /// <summary>
+        /// Ask user for password input and return the password as a <see cref="SecureString"/>.
+        /// </summary>
+        /// <param name="showMask">If <see langword="true"/>, will show a '*' for each character the user inputs. If <see langword="false"/>, user input is hidden.</param>
+        /// <returns></returns>
+        public static SecureString PasswordAsSecureString(this IKonsole konsole, bool showMask = false)
+        {
+            SecureString password = new SecureString();
+
+            Password(konsole, showMask, c => password.AppendChar(c), () => password.RemoveAt(password.Length - 1));
+
+            return password;
+        }
+
+        private static void Password(IKonsole konsole, bool showMask, Action<char> appendChar, Action removeChar)
+        {
+            ConsoleKeyInfo keyInfo;
+            int passwordLength = 0;
+
+            do
+            {
+                keyInfo = konsole.ReadKey(intercept: true);
+
+                if (keyInfo.Key == ConsoleKey.Backspace && passwordLength > 0)
+                {
+                    if (showMask)
+                        konsole.Write("\b \b");
+
+                    removeChar();
+                    passwordLength--;
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    if (showMask)
+                        konsole.Write("*");
+
+                    appendChar(keyInfo.KeyChar);
+                    passwordLength++;
+                }
+            } while (keyInfo.Key != ConsoleKey.Enter);
         }
     }
 }
