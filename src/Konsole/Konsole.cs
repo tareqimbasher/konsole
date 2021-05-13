@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KonsoleDotNet.Transcripts;
+using System;
 
 namespace KonsoleDotNet
 {
@@ -7,6 +8,8 @@ namespace KonsoleDotNet
     /// </summary>
     public class Konsole : IKonsole
     {
+        private Transcript _transcript;
+
         /// <summary>
         /// Constructs an instance of the <see cref="Konsole"/> with built-in defaults.
         /// </summary>
@@ -35,14 +38,26 @@ namespace KonsoleDotNet
 
         public virtual IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
+            var now = DateTime.UtcNow;
+
             var originalForegroundColor = Console.ForegroundColor;
             var originalBackgroundColor = Console.BackgroundColor;
+
             Console.ForegroundColor = foregroundColor;
             Console.BackgroundColor = backgroundColor;
             Console.Write(text);
             Console.ForegroundColor = originalForegroundColor;
             Console.BackgroundColor = originalBackgroundColor;
-            Defaults.PostWriteAction?.Invoke(this, text);
+
+            _transcript?.Add(text, TranscriptLogType.Output, now);
+
+            // Safe gaurd against exceptions in user-defined PostWriteAction
+            try
+            {
+                Defaults.PostWriteAction?.Invoke(this, text);
+            }
+            catch { }
+
             return this;
         }
 
@@ -88,6 +103,19 @@ namespace KonsoleDotNet
         {
             ForegroundColor = Defaults.DefaultForegroundColor;
             BackgroundColor = Defaults.DefaultBackgroundColor;
+            return this;
+        }
+
+
+        public IKonsole StartTranscriptLogging(Transcript transcript)
+        {
+            _transcript = transcript ?? throw new ArgumentNullException(nameof(transcript));
+            return this;
+        }
+
+        public IKonsole StopTranscriptLogging()
+        {
+            _transcript = null;
             return this;
         }
     }

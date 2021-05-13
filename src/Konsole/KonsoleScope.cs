@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KonsoleDotNet.Transcripts;
+using System;
 
 namespace KonsoleDotNet
 {
@@ -56,5 +57,9 @@ namespace KonsoleDotNet
             BackgroundColor = Defaults.DefaultBackgroundColor;
             return this;
         }
+
+        public IKonsole StartTranscriptLogging(Transcript transcript) => Konsole.StartTranscriptLogging(transcript);
+
+        public IKonsole StopTranscriptLogging() => Konsole.StopTranscriptLogging();
     }
 }

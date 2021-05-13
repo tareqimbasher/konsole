@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KonsoleDotNet.Transcripts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -96,5 +97,8 @@ namespace KonsoleDotNet
         /// Resets this console's colors to their default setting.
         /// </summary>
         IKonsole ResetColors();
+
+        IKonsole StartTranscriptLogging(Transcript transcript);
+        IKonsole StopTranscriptLogging();
     }
 }
