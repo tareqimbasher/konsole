@@ -2,7 +2,7 @@
 
 namespace KonsoleDotNet
 {
-    public static class KonsoleScopingExtensions
+    public static class KonsoleScopeExtensions
     {
         /// <summary>
         /// Creates a scope where configuration changes to the scope do not affect this <see cref="IKonsole"/> instance.

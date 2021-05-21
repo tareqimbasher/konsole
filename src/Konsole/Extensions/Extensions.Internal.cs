@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KonsoleDotNet
+﻿namespace KonsoleDotNet
 {
     internal static class InternalExtensions
     {
-        public static string Truncate(this string str, int maxLength)
+        internal static string Truncate(this string str, int maxLength)
         {
             if (str == null)
                 return str;
