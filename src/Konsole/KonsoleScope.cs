@@ -31,20 +31,10 @@ namespace KonsoleDotNet
 
         public KonsoleDefaults Defaults { get; }
 
-
+        public Transcript Transcript => Konsole.Transcript;
 
         public IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
             => Konsole.Write(text, foregroundColor, backgroundColor);
-        public IKonsole Write(string text, ConsoleColor foregroundColor)
-            => Konsole.Write(text, foregroundColor, BackgroundColor);
-        public IKonsole Write(string text) => Konsole.Write(text, ForegroundColor, BackgroundColor);
-
-        public IKonsole WriteLine(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
-            => Konsole.WriteLine(text, foregroundColor, backgroundColor);
-        public IKonsole WriteLine(string text, ConsoleColor foregroundColor)
-            => Konsole.WriteLine(text, foregroundColor, BackgroundColor);
-        public IKonsole WriteLine(string text) => Konsole.WriteLine(text, ForegroundColor, BackgroundColor);
-        public IKonsole WriteLine() => Konsole.WriteLine();
 
         public IKonsole Debug(string text) => Konsole.Debug(text);
         public IKonsole Info(string text) => Konsole.Info(text);

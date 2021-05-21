@@ -1,4 +1,5 @@
 ﻿using KonsoleDotNet.ProgressBars;
+using KonsoleDotNet.Transcripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,43 @@ namespace KonsoleDotNet.Samples
         static void Main()
         {
             IKonsole console = new Konsole();
+            console.WriteLine("Starting...");
+
+            var transcript = new Transcript();
+            console.StartTranscriptLogging(transcript);
+
+            //var input = console.Write("Enter a num: ").Read(keyInfo =>
+            //{
+            //    return keyInfo.Key != ConsoleKey.Enter;
+            //}, keyInfo =>
+            //{
+            //    if (keyInfo.KeyChar == 'x')
+            //        return "*";
+            //    else if (!char.IsDigit(keyInfo.KeyChar) && keyInfo.Key != ConsoleKey.Spacebar)
+            //        return "";
+            //    else
+            //        return keyInfo.KeyChar.ToString();
+            //});
+
+            //Console.WriteLine("\nINPUT: " + input);
+            //return;
+
+            //console.ReadInput(k =>
+            //{
+            //    Console.Write(k.KeyChar);
+
+            //    return k.Key != ConsoleKey.Q;
+            //});
 
             BasicUsage(console);
             Prompts(console);
             ProgressBars(console);
+
+
+            console.StopTranscriptLogging();
+
+            console.WriteLine().WriteDivider().WriteDivider();
+            console.WriteLine(transcript.ToString());
         }
 
         private static void BasicUsage(IKonsole console)

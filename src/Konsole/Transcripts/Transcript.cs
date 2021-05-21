@@ -26,12 +26,12 @@ namespace KonsoleDotNet.Transcripts
         public IReadOnlyList<TranscriptLog> Logs => _logs;
         public bool IsReadOnly => _isReadOnly;
 
-        public virtual void Add(string text, TranscriptLogType type, DateTime dateTime)
+        public virtual void Add(string text, TranscriptLogType type, DateTime dateTimeUtc)
         {
             if (_isReadOnly)
                 throw new InvalidOperationException("This transcript is readonly and cannot be added to.");
 
-            var log = new TranscriptLog(text, type, dateTime);
+            var log = new TranscriptLog(text, type, dateTimeUtc);
             _logs.Add(log);
             OnLogAdded(log);
         }

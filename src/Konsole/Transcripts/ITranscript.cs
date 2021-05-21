@@ -8,7 +8,7 @@ namespace KonsoleDotNet.Transcripts
         event EventHandler<TranscriptLog> LogAdded;
         string Name { get; }
         IReadOnlyList<TranscriptLog> Logs { get; }
-        void Add(string text, TranscriptLogType type, DateTime dateTime);
+        void Add(string text, TranscriptLogType type, DateTime dateTimeUtc);
         void Clear();
         void MakeReadOnly();
     }

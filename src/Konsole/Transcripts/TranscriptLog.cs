@@ -4,15 +4,15 @@ namespace KonsoleDotNet.Transcripts
 {
     public class TranscriptLog
     {
-        public TranscriptLog(string text, TranscriptLogType type, DateTime dateTime)
+        public TranscriptLog(string text, TranscriptLogType type, DateTime dateTimeUtc)
         {
             Text = text;
             Type = type;
-            DateTime = dateTime;
+            DateTimeUtc = dateTimeUtc;
         }
 
         public string Text { get; set; }
         public TranscriptLogType Type { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime DateTimeUtc { get; set; }
     }
 }

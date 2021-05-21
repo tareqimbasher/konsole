@@ -35,6 +35,8 @@ namespace KonsoleDotNet
 
         public virtual KonsoleDefaults Defaults { get; }
 
+        public virtual Transcript Transcript { get; }
+
 
         public virtual IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
@@ -61,41 +63,28 @@ namespace KonsoleDotNet
             return this;
         }
 
-        public IKonsole Write(string text, ConsoleColor foregroundColor) => Write(text, foregroundColor, BackgroundColor);
-
-        public IKonsole Write(string text) => Write(text, ForegroundColor, BackgroundColor);
-
-
-        public IKonsole WriteLine(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor) => Write(text + "\n", foregroundColor, backgroundColor);
-
-        public IKonsole WriteLine(string text, ConsoleColor foregroundColor) => WriteLine(text, foregroundColor, BackgroundColor);
-
-        public IKonsole WriteLine(string text) => WriteLine(text, ForegroundColor, BackgroundColor);
-
-        public IKonsole WriteLine() => Write("\n");
-
 
         public virtual IKonsole Info(string text)
         {
-            Defaults.Info(this.CreateScope(), text);
+            Defaults.Info?.Invoke(this.CreateScope(), text);
             return this;
         }
 
         public virtual IKonsole Debug(string text)
         {
-            Defaults.Debug(this.CreateScope(), text);
+            Defaults.Debug?.Invoke(this.CreateScope(), text);
             return this;
         }
 
         public virtual IKonsole Warn(string text)
         {
-            Defaults.Warn(this.CreateScope(), text);
+            Defaults.Warn?.Invoke(this.CreateScope(), text);
             return this;
         }
 
         public virtual IKonsole Error(string text)
         {
-            Defaults.Error(this.CreateScope(), text);
+            Defaults.Error?.Invoke(this.CreateScope(), text);
             return this;
         }
 
@@ -107,13 +96,13 @@ namespace KonsoleDotNet
         }
 
 
-        public IKonsole StartTranscriptLogging(Transcript transcript)
+        public virtual IKonsole StartTranscriptLogging(Transcript transcript)
         {
             _transcript = transcript ?? throw new ArgumentNullException(nameof(transcript));
             return this;
         }
 
-        public IKonsole StopTranscriptLogging()
+        public virtual IKonsole StopTranscriptLogging()
         {
             _transcript = null;
             return this;
