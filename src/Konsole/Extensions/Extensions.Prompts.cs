@@ -10,13 +10,20 @@ namespace KonsoleDotNet
     public static class PromptExtensions
     {
         /// <summary>
+        /// Ask user for input, returned as a string.
+        /// </summary>
+        /// <param name="question">The text to display to user.</param>
+        public static string Ask(this IKonsole konsole, string question) => Ask<string>(konsole, question);
+
+        /// <summary>
         /// Ask user for input and convert input to <typeparamref name="TReturn"/>.
         /// </summary>
         /// <typeparam name="TReturn">The type to convert user input into.</typeparam>
         /// <param name="question">The text to display to user.</param>
         public static TReturn Ask<TReturn>(this IKonsole konsole, string question)
         {
-            var cursorInitialPosition = Console.CursorTop;
+            var cursorInitTopPosition = Console.CursorTop;
+
             var converter = TypeDescriptor.GetConverter(typeof(TReturn));
             if (converter == null)
                 throw new NotSupportedException($"Type {typeof(TReturn).Name} does not have a valid converter.");
@@ -24,7 +31,7 @@ namespace KonsoleDotNet
             string input = null;
             while (input == null)
             {
-                Console.SetCursorPosition(0, cursorInitialPosition);
+                Console.SetCursorPosition(0, cursorInitTopPosition);
                 konsole.ClearCurrentLine().Write($"- {question} ");
                 input = konsole.ReadLine().Trim();
 
@@ -47,18 +54,13 @@ namespace KonsoleDotNet
             return default;
         }
 
-        /// <summary>
-        /// Ask user for input, returned as a string.
-        /// </summary>
-        /// <param name="question">The text to display to user.</param>
-        public static string Ask(this IKonsole konsole, string question) => Ask<string>(konsole, question);
-
 
         /// <summary>
         /// Ask user to select from a group of options.
         /// </summary>
         /// <param name="question">The text to display to user.</param>
         /// <param name="options">Options the user must select from.</param>
+        /// <returns>Selected options.</returns>
         public static IEnumerable<string> Ask(this IKonsole konsole, string question, IEnumerable<string> options)
             => Ask(konsole, question, options, x => x);
 
@@ -68,22 +70,33 @@ namespace KonsoleDotNet
         /// <param name="question">The text to display to user.</param>
         /// <param name="options">Options the user must select from.</param>
         /// <param name="optionFormatter">A function that returns a string representation of each option.</param>
-        /// <returns></returns>
+        /// <returns>Selected options.</returns>
         public static IEnumerable<T> Ask<T>(this IKonsole konsole, string question, IEnumerable<T> options, Func<T, string> optionFormatter)
         {
             if (optionFormatter == null)
                 throw new ArgumentNullException(nameof(optionFormatter));
 
-            int cursorInitialPosition = Console.CursorTop;
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+
+            int cursorInitTopPosition = Console.CursorTop;
             var optionsArr = options.ToArray();
-            List<T> selected = new List<T>();
+
+            var selectedOptionIndicies = new HashSet<int>();
+
+            void select(int index)
+            {
+                if (!selectedOptionIndicies.Contains(index))
+                {
+                    selectedOptionIndicies.Add(index);
+                }
+            }
 
             bool prompt(out string selection)
             {
-                selected = new List<T>();
-                var added = new HashSet<int>();
+                selectedOptionIndicies.Clear();
 
-                Console.SetCursorPosition(0, cursorInitialPosition);
+                Console.SetCursorPosition(0, cursorInitTopPosition);
                 konsole.WriteLine($"- {question}")
                     .OrderedList(optionsArr.Select(o => optionFormatter(o)))
                     .WriteLine();
@@ -96,73 +109,54 @@ namespace KonsoleDotNet
 
                 foreach (var part in selection.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    if (part.Contains("-"))
+                    if (part.Contains('-'))
                     {
                         var range = part.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (range.Length != 2)
+                        
+                        if (range.Length != 2 || 
+                            !int.TryParse(range[0], out var start) || 
+                            !int.TryParse(range[1], out var end))
+                        {
                             return false;
-
-                        if (!int.TryParse(range[0], out var start))
-                            return false;
-
-                        if (!int.TryParse(range[1], out var end))
-                            return false;
+                        }
 
                         start--;
                         end--;
 
-                        if (start < 0)
-                            start = 0;
-
-                        if (end > optionsArr.Length - 1)
-                            end = optionsArr.Length - 1;
-
-                        if (start > end)
+                        if (start < 0 || (end > optionsArr.Length - 1) || start > end)
                             return false;
 
-                        if (start == end && !added.Contains(start))
+                        int rangeCount = start == end ? 1 : (end - start + 1);
+                        foreach (var index in Enumerable.Range(start, rangeCount))
                         {
-                            selected.Add(optionsArr[start]);
-                            added.Add(start);
-                        }
-                        else
-                        {
-                            var ixRange = Enumerable.Range(start, end - start + 1).ToArray();
-                            for (int i = 0; i < ixRange.Length; i++)
-                            {
-                                int ix = ixRange[i];
-                                if (!added.Contains(ix))
-                                {
-                                    selected.Add(optionsArr[ix]);
-                                    added.Add(ix);
-                                }
-                            }
+                            select(index);
                         }
                     }
-                    else if (int.TryParse(part, out var ix) && !added.Contains(--ix))
+                    else if (int.TryParse(part, out var index))
                     {
-                        if (ix < 0 || ix > optionsArr.Length - 1)
+                        index--;
+
+                        if (index < 0 || index > optionsArr.Length - 1)
                             return false;
 
-                        selected.Add(optionsArr[ix]);
-                        added.Add(ix);
+                        select(index);
                     }
                 }
 
-                return true;
+                return selectedOptionIndicies.Any();
             }
 
             while (!prompt(out string selection))
             {
                 konsole.ClearCurrentLine()
-                    .WriteLine(string.IsNullOrWhiteSpace(selection) ? "Please make a selection" : $"Invalid selection: {selection}", ConsoleColor.Red)
+                    .Error(string.IsNullOrWhiteSpace(selection) ? "Please make a selection" : $"Invalid selection: {selection}")
                     .WriteLine();
             }
 
             // Clear invalid input message incase it was written
             konsole.ClearCurrentLine();
 
-            return selected;
+            return selectedOptionIndicies.Select(ix => optionsArr[ix]);
         }
 
 
@@ -170,58 +164,44 @@ namespace KonsoleDotNet
         /// Ask user to yes/no question with no default answer.
         /// </summary>
         /// <param name="text">The text to display to user.</param>
-        public static bool Confirm(this IKonsole konsole, string text)
-        {
-            var cursorInitialPosition = Console.CursorTop;
-
-            string selection = null;
-            while (selection == null)
-            {
-                Console.SetCursorPosition(0, cursorInitialPosition);
-                konsole.ClearCurrentLine().Write($"- {text} [y/n]: ");
-                selection = konsole.ReadLine().Trim();
-
-                if (selection.Equals("y", StringComparison.OrdinalIgnoreCase))
-                    return true;
-                else if (selection.Equals("n", StringComparison.OrdinalIgnoreCase))
-                    return true;
-                else
-                    selection = null;
-            }
-
-            return false;
-        }
+        public static bool Confirm(this IKonsole konsole, string text) => Confirm(konsole, text, null);
 
         /// <summary>
         /// Ask user to yes/no question with a default answer.
         /// </summary>
         /// <param name="text">The text to display to user.</param>
         /// <param name="defaultAnswer">The default answer if the user hits ENTER without specifying an answer.</param>
-        public static bool Confirm(this IKonsole konsole, string text, bool defaultAnswer)
+        public static bool Confirm(this IKonsole konsole, string text, bool defaultAnswer) => Confirm(konsole, text, defaultAnswer);
+
+        private static bool Confirm(IKonsole konsole, string text, bool? defaultAnswer)
         {
-            var cursorInitialPosition = Console.CursorTop;
-            var options = defaultAnswer ? "[Y/n]" : "[y/N]";
+            var cursorInitTopPosition = Console.CursorTop;
+            string options;
+
+            if (defaultAnswer == null)
+                options = "[y/n]";
+            else
+                options = defaultAnswer == true ? "[Y/n]" : "[y/N]";
 
             string selection = null;
             while (selection == null)
             {
-                Console.SetCursorPosition(0, cursorInitialPosition);
+                Console.SetCursorPosition(0, cursorInitTopPosition);
                 konsole.ClearCurrentLine().Write($"- {text} {options}: ");
                 selection = konsole.ReadLine().Trim();
 
                 if (selection.Equals("y", StringComparison.OrdinalIgnoreCase))
                     return true;
                 else if (selection.Equals("n", StringComparison.OrdinalIgnoreCase))
-                    return true;
-                else if (selection == string.Empty)
-                    return defaultAnswer;
+                    return false;
+                else if (defaultAnswer != null && selection == string.Empty)
+                    return defaultAnswer.Value;
                 else
                     selection = null;
             }
 
             return false;
         }
-
 
 
         /// <summary>
