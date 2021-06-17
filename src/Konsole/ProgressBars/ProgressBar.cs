@@ -2,6 +2,9 @@
 
 namespace KonsoleDotNet.ProgressBars
 {
+    /// <summary>
+    /// A bar that represents progress.
+    /// </summary>
     public class ProgressBar
     {
         internal ProgressBar(IKonsole konsole, string text, int row)
@@ -49,9 +52,12 @@ namespace KonsoleDotNet.ProgressBars
                     Text = string.Empty;
 
                 Console.SetCursorPosition(0, Row);
+
+                int half = (int)Math.Floor((Console.BufferWidth - 1) / 2.0);
+
                 Konsole
                     .ClearCurrentLine()
-                    .Write(Text.Truncate(50).PadRight(50))
+                    .Write(Text.Truncate(half).PadRight(half))
                     .WithForeColor(ConsoleColor.White).Write($" {percentComplete,-3}% ");
 
                 int availableSpace = Console.BufferWidth - Console.CursorLeft - 1;
