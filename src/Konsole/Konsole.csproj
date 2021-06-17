@@ -3,16 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Konsole</AssemblyName>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
     <Authors>Tareq Imbasher</Authors>
     <Company>Meccasoft, LLC</Company>
-    <Description>A light-weight System.Console utility wrapper for .NET.</Description>
+    <Description>A light-weight .NET utility and wrapper for System.Console.</Description>
     <Copyright>2021 Tareq Imbasher</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>System.Console,console,konsole,wrapper,color,utility,progress,progressbar,cui</PackageTags>
     <PackageReleaseNotes>New features:
-- Prompts
-- Progress Bars</PackageReleaseNotes>
+- Transcripts
+- Read key-by-key and transform
+- Better namespacing</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/tareqimbasher/konsole</PackageProjectUrl>
     <PackageIcon>icon-128.png</PackageIcon>
     <RepositoryUrl>https://github.com/tareqimbasher/konsole</RepositoryUrl>
