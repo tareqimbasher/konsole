@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace KonsoleDotNet.ProgressBars
 {
+    /// <summary>
+    /// A group of progress bars.
+    /// </summary>
     public class ProgressBarGroup
     {
         private readonly List<ProgressBar> _progressBars;

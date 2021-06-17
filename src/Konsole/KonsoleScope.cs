@@ -3,8 +3,15 @@ using System;
 
 namespace KonsoleDotNet
 {
+    /// <summary>
+    /// Default implementation of <see cref="IKonsoleScope"/>.
+    /// </summary>
     public class KonsoleScope : IKonsoleScope
     {
+        /// <summary>
+        /// Initializes an instance of <see cref="KonsoleScope"/>.
+        /// </summary>
+        /// <param name="konsole"></param>
         public KonsoleScope(IKonsole konsole)
         {
             Konsole = konsole;

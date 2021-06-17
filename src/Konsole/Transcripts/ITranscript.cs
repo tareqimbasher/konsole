@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace KonsoleDotNet.Transcripts
 {
+    /// <summary>
+    /// Represents a collection of inputs and outputs captured by a <see cref="IKonsole"/>.
+    /// </summary>
     public interface ITranscript
     {
         /// <summary>
@@ -30,7 +33,7 @@ namespace KonsoleDotNet.Transcripts
         /// </summary>
         /// <param name="text">The text to log.</param>
         /// <param name="type">The type of log to add.</param>
-        /// <param name="dateTimeUtc">The date and time this log was recorded.</param>
+        /// <param name="dateTimeUtc">The date and time the text was captured.</param>
         void Add(string text, TranscriptLogType type, DateTime dateTimeUtc);
 
         /// <summary>

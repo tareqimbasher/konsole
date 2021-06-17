@@ -4,6 +4,9 @@ using System.Text;
 
 namespace KonsoleDotNet.Transcripts
 {
+    /// <summary>
+    /// Default implementation of a <see cref="ITranscript"/>.
+    /// </summary>
     public class Transcript : ITranscript
     {
         private readonly string _name;

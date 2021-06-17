@@ -3,7 +3,7 @@
 namespace KonsoleDotNet
 {
     /// <summary>
-    /// Represents the default settings of a <see cref="Konsole"/> instance.
+    /// Represents the default settings of an <see cref="IKonsole"/> instance.
     /// </summary>
     public class KonsoleDefaults
     {

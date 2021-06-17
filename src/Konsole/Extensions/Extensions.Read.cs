@@ -56,7 +56,7 @@ namespace KonsoleDotNet
         /// <param name="onKeyDown">A function to execute after each key entered by the user. It should return a <see cref="bool"></see> that indicates
         /// if the method should continue to receive input from the user or should stop and return the collected input.
         /// If <see langword="null"/> is passed, user input will end when the user hits ENTER.</param>
-        /// <param name="transform">A function to execute after each key entered by the user that returns a string indicating the character that input key should be transformed into.
+        /// <param name="transform">A function to execute after each key entered by the user that returns a string that the input key should be transformed into.
         /// If <see langword="null"/> is passed, user input will not be transformed.</param>
         public static string Read(this IKonsole konsole, Func<ConsoleKeyInfo, bool> onKeyDown = null, Func<ConsoleKeyInfo, string> transform = null)
         {

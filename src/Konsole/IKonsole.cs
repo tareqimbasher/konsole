@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KonsoleDotNet
 {
+    /// <summary>
+    /// Represents a console that can be read and written to.
+    /// </summary>
     public interface IKonsole
     {
         /// <summary>

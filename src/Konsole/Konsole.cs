@@ -4,7 +4,7 @@ using System;
 namespace KonsoleDotNet
 {
     /// <summary>
-    /// A utility wrapper of the <see cref="Console"/>.
+    /// Default implementation of <see cref="IKonsole"/>.
     /// </summary>
     public class Konsole : IKonsole
     {
