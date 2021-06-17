@@ -31,7 +31,7 @@ namespace KonsoleDotNet
 
         public KonsoleDefaults Defaults { get; }
 
-        public Transcript Transcript => Konsole.Transcript;
+        public ITranscript Transcript => Konsole.Transcript;
 
         public IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
             => Konsole.Write(text, foregroundColor, backgroundColor);
@@ -48,7 +48,7 @@ namespace KonsoleDotNet
             return this;
         }
 
-        public IKonsole StartTranscriptLogging(Transcript transcript) => Konsole.StartTranscriptLogging(transcript);
+        public IKonsole StartTranscriptLogging(ITranscript transcript) => Konsole.StartTranscriptLogging(transcript);
 
         public IKonsole StopTranscriptLogging() => Konsole.StopTranscriptLogging();
     }

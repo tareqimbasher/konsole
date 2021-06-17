@@ -24,10 +24,10 @@ namespace KonsoleDotNet
 
         /// <summary>
         /// If transcript logging is active, this is the transcript this console is logging to. This property
-        /// will be <see langword="null"/> if transcript logging is not active. Use <see cref="StartTranscriptLogging(Transcript)"/>
+        /// will be <see langword="null"/> if transcript logging is not active. Use <see cref="StartTranscriptLogging(ITranscript)"/>
         /// to activate transcript logging.
         /// </summary>
-        Transcript Transcript { get; }
+        ITranscript Transcript { get; }
 
         /// <summary>
         /// Writes the specified string to the console with the specified foreground and background colors.
@@ -73,7 +73,7 @@ namespace KonsoleDotNet
         /// as the new transcript this console will log to.
         /// </summary>
         /// <param name="transcript">The transcript to log to.</param>
-        IKonsole StartTranscriptLogging(Transcript transcript);
+        IKonsole StartTranscriptLogging(ITranscript transcript);
 
         /// <summary>
         /// Stops transcript logging. Also sets <see cref="Transcript"/> to <see langword="null"/>.

@@ -8,7 +8,7 @@ namespace KonsoleDotNet
     /// </summary>
     public class Konsole : IKonsole
     {
-        private Transcript _transcript;
+        private ITranscript _transcript;
 
         /// <summary>
         /// Constructs an instance of the <see cref="Konsole"/> with built-in defaults.
@@ -35,7 +35,7 @@ namespace KonsoleDotNet
 
         public virtual KonsoleDefaults Defaults { get; }
 
-        public virtual Transcript Transcript { get; }
+        public virtual ITranscript Transcript { get; }
 
 
         public virtual IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
@@ -96,7 +96,7 @@ namespace KonsoleDotNet
         }
 
 
-        public virtual IKonsole StartTranscriptLogging(Transcript transcript)
+        public virtual IKonsole StartTranscriptLogging(ITranscript transcript)
         {
             _transcript = transcript ?? throw new ArgumentNullException(nameof(transcript));
             return this;
