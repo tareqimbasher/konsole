@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Konsole", "Konsole\Konsole.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Konsole.Samples", "Konsole.Samples\Konsole.Samples.csproj", "{6ADAEB54-B587-49FF-BA7F-9C9089EDD416}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Konsole.Tests", "Konsole.Tests\Konsole.Tests.csproj", "{804F1461-1437-4711-AEF1-6E550AF8B0B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6ADAEB54-B587-49FF-BA7F-9C9089EDD416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ADAEB54-B587-49FF-BA7F-9C9089EDD416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ADAEB54-B587-49FF-BA7F-9C9089EDD416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{804F1461-1437-4711-AEF1-6E550AF8B0B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{804F1461-1437-4711-AEF1-6E550AF8B0B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{804F1461-1437-4711-AEF1-6E550AF8B0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{804F1461-1437-4711-AEF1-6E550AF8B0B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

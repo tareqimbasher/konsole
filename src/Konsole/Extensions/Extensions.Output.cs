@@ -86,7 +86,8 @@ namespace KonsoleDotNet
         /// <param name="dividerChar">The character to use for the divider.</param>
         public static IKonsole WriteDivider(this IKonsole konsole, char dividerChar = '-')
         {
-            konsole.WriteLine(new string(dividerChar, Console.BufferWidth));
+            int length = Console.BufferWidth < 1 ? 1 : Console.BufferWidth;
+            konsole.WriteLine(new string(dividerChar, length));
             return konsole;
         }
 
