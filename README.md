@@ -1,5 +1,7 @@
 # <img align="left" width="48" height="48" src="https://github.com/tareqimbasher/konsole/blob/main/docs/icon-128.png?raw=true"> Konsole
 
+[![dev](https://github.com/tareqimbasher/konsole/actions/workflows/dev.yml/badge.svg)](https://github.com/tareqimbasher/konsole/actions/workflows/dev.yml)
+
 A light-weight System.Console utility wrapper for .NET with lots of useful and 
 common extensions.
 
