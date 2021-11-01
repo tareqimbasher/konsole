@@ -26,6 +26,7 @@ namespace KonsoleDotNet.Transcripts
         public event EventHandler<TranscriptLog> LogAdded;
 
         public string Name => _name;
+
         public IReadOnlyList<TranscriptLog> Logs => _logs;
         public bool IsReadOnly => _isReadOnly;
 

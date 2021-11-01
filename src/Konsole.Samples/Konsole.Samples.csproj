@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>samples</AssemblyName>
-    <RootNamespace>KonsoleDotNet.Samples</RootNamespace>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>samples</AssemblyName>
+        <RootNamespace>KonsoleDotNet.Samples</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Konsole\Konsole.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Konsole\Konsole.csproj"/>
+    </ItemGroup>
 
 </Project>

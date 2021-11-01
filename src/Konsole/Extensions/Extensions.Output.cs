@@ -11,7 +11,7 @@ namespace KonsoleDotNet
         /// </summary>
         /// <param name="text">The value to write.</param>
         /// <param name="foregroundColor">The foreground color.</param>
-        public static IKonsole Write(this IKonsole konsole, string text, ConsoleColor foregroundColor) 
+        public static IKonsole Write(this IKonsole konsole, string text, ConsoleColor foregroundColor)
             => konsole.Write(text, foregroundColor, konsole.BackgroundColor);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace KonsoleDotNet
         /// <param name="text">The value to write.</param>
         /// <param name="foregroundColor">The foreground color.</param>
         /// <param name="backgroundColor">The background color</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor) 
+        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
             => konsole.Write(text + "\n", foregroundColor, backgroundColor);
 
         /// <summary>
@@ -34,14 +34,14 @@ namespace KonsoleDotNet
         /// </summary>
         /// <param name="text">The value to write.</param>
         /// <param name="foregroundColor">The foreground color.</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor) 
+        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor)
             => konsole.WriteLine(text, foregroundColor, konsole.BackgroundColor);
 
         /// <summary>
         /// Writes the specified string to the console followed by a line terminator with the current foreground and background colors.
         /// </summary>
         /// <param name="text">The value to write.</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text) 
+        public static IKonsole WriteLine(this IKonsole konsole, string text)
             => konsole.WriteLine(text, konsole.ForegroundColor, konsole.BackgroundColor);
 
         /// <summary>
@@ -115,6 +115,7 @@ namespace KonsoleDotNet
                 konsole.Write($"{indentation}{bullet} ".PadRight(numberPadding));
                 konsole.WriteLine(item?.Replace("\n", $"\n{newLineReplacement}") ?? string.Empty);
             }
+
             return konsole;
         }
 
@@ -146,6 +147,7 @@ namespace KonsoleDotNet
                 konsole.WriteLine(item?.Replace("\n", $"\n{newLineReplacement}") ?? string.Empty);
                 count++;
             }
+
             return konsole;
         }
 

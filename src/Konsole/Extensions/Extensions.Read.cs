@@ -16,7 +16,7 @@ namespace KonsoleDotNet
             {
                 Log(konsole, Convert.ToChar(input).ToString());
             }
-            
+
             return input;
         }
 
@@ -88,8 +88,7 @@ namespace KonsoleDotNet
                         input.Append(c);
                     }
                 }
-            }
-            while (onKeyDown(keyInfo));
+            } while (onKeyDown(keyInfo));
 
             string str = input.ToString();
 

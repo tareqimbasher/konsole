@@ -112,9 +112,9 @@ namespace KonsoleDotNet
                     if (part.Contains('-'))
                     {
                         var range = part.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-                        
-                        if (range.Length != 2 || 
-                            !int.TryParse(range[0], out var start) || 
+
+                        if (range.Length != 2 ||
+                            !int.TryParse(range[0], out var start) ||
                             !int.TryParse(range[1], out var end))
                         {
                             return false;

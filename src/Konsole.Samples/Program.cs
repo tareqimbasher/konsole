@@ -85,7 +85,7 @@ namespace KonsoleDotNet.Samples
             var tasks = new List<Task>();
 
             var group = console.WithForeColor(ConsoleColor.DarkCyan).ProgressBarGroup();
-            
+
             foreach (var i in Enumerable.Range(1, 5))
             {
                 var progressBar = group.ProgressBar($"Async Operation {i}");
@@ -105,7 +105,7 @@ namespace KonsoleDotNet.Samples
             {
                 progressBar.Update((i + 1) * 10, $"{text} | Item {i + 1} of 10");
                 Thread.Sleep(progressDuration);
-            };
+            }
         }
     }
 }

@@ -14,7 +14,9 @@ namespace KonsoleDotNet.Transcripts
         /// </summary>
         Input = 1,
 
+        /// <summary>
         /// Output written to a <see cref="IKonsole"/>.
+        /// </summary>
         Output = 2
     }
 }

@@ -53,12 +53,14 @@ namespace KonsoleDotNet
 
             _transcript?.Add(text, TranscriptLogType.Output, now);
 
-            // Safe gaurd against exceptions in user-defined PostWriteAction
+            // Safe guard against exceptions in user-defined PostWriteAction
             try
             {
                 Defaults.PostWriteAction?.Invoke(this, text);
             }
-            catch { }
+            catch
+            {
+            }
 
             return this;
         }
