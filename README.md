@@ -1,6 +1,7 @@
 # <img align="left" width="48" height="48" src="https://github.com/tareqimbasher/konsole/blob/asks/docs/icon-128.png?raw=true"> Konsole
 
-A light-weight System.Console utility wrapper for .NET.
+A light-weight System.Console utility wrapper for .NET with lots of useful and 
+common extensions.
 
 ## Install
 
@@ -18,8 +19,9 @@ dotnet add package Konsole
 
 
 ## Why?
-When writing applications geared for use with the console, we often end up rolling our own 
-helpers for formatting output, getting user input..etc. This library aims to make that job just a little bit easier.
+When writing applications geared for use with the console, I often end up rolling my own 
+helpers for formatting output, getting user input..etc. This library aims to provide a 
+good collection of utilities and extensions to save you from having to do it every time.
 
 
 ## Usage
@@ -27,23 +29,10 @@ helpers for formatting output, getting user input..etc. This library aims to mak
 You can use the built-in `Konsole` class to quickly get up and running:
 
 ```csharp
-IKonsole console = new Konsole();
+var console = new Konsole();
 ```
 
-You can also created your own implementation of the `IKonsole` interface, or inherit from `Konsole` and override 
-the class members you need:
-
-```csharp
-public class MyConsole : Konsole
-{
-    public override IKonsole Write(string text)
-    {
-        return base.Write($"My app: {text}");
-    }
-}
-```
-
-Use it like you would `System.Console`
+It should be a drop-in replacement for `System.Console`
 
 ```csharp
 console.WriteLine("Lorem ipsum");
@@ -168,6 +157,21 @@ var progressBar2 = group.ProgressBar("File 2");
 
 progressBar1.Update(50);
 progressBar2.Update(35);
+```
+
+## Extending the Konsole
+
+You can create your own implementation of the `IKonsole` interface, or inherit
+from `Konsole` and override the members you need:
+
+```csharp
+public class MyConsole : Konsole
+{
+    public override IKonsole Write(string text)
+    {
+        return base.Write($"My app says: {text}");
+    }
+}
 ```
 
 <br/>
