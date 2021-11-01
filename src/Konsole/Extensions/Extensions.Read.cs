@@ -99,7 +99,7 @@ namespace KonsoleDotNet
 
         private static void Log(IKonsole konsole, string text)
         {
-            konsole.Transcript?.Add(text, Transcripts.TranscriptLogType.Input, DateTime.UtcNow);
+            konsole.Transcript.Add(text, Transcripts.TranscriptLogType.Input, DateTime.UtcNow);
         }
     }
 }

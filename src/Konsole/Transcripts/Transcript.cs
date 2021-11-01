@@ -9,9 +9,7 @@ namespace KonsoleDotNet.Transcripts
     /// </summary>
     public class Transcript : ITranscript
     {
-        private readonly string _name;
         private readonly List<TranscriptLog> _logs;
-        private bool _isReadOnly = false;
 
         public Transcript()
         {
@@ -20,19 +18,19 @@ namespace KonsoleDotNet.Transcripts
 
         public Transcript(string name) : this()
         {
-            _name = name;
+            Name = name;
         }
 
         public event EventHandler<TranscriptLog> LogAdded;
 
-        public string Name => _name;
+        public string Name { get; }
 
         public IReadOnlyList<TranscriptLog> Logs => _logs;
-        public bool IsReadOnly => _isReadOnly;
+        public bool IsReadOnly { get; private set; } = false;
 
         public virtual void Add(string text, TranscriptLogType type, DateTime dateTimeUtc)
         {
-            if (_isReadOnly)
+            if (IsReadOnly)
                 throw new InvalidOperationException("This transcript is readonly and cannot be added to.");
 
             var log = new TranscriptLog(text, type, dateTimeUtc);
@@ -42,7 +40,7 @@ namespace KonsoleDotNet.Transcripts
 
         public void Clear()
         {
-            if (_isReadOnly)
+            if (IsReadOnly)
                 throw new InvalidOperationException("This transcript is readonly and cannot be cleared.");
 
             _logs.Clear();
@@ -50,7 +48,7 @@ namespace KonsoleDotNet.Transcripts
 
         public void MakeReadOnly()
         {
-            _isReadOnly = true;
+            IsReadOnly = true;
         }
 
         protected virtual void OnLogAdded(TranscriptLog log)

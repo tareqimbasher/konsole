@@ -14,6 +14,11 @@ namespace KonsoleDotNet.Transcripts
         string Name { get; }
 
         /// <summary>
+        /// Indicates if this transcript is read-only.
+        /// </summary>
+        bool IsReadOnly { get; }
+        
+        /// <summary>
         /// Log entries.
         /// </summary>
         IReadOnlyList<TranscriptLog> Logs { get; }
@@ -22,11 +27,6 @@ namespace KonsoleDotNet.Transcripts
         /// Event is fired every time a log is added to this transcript.
         /// </summary>
         event EventHandler<TranscriptLog> LogAdded;
-
-        /// <summary>
-        /// Indicates if this transcript is read-only.
-        /// </summary>
-        bool IsReadOnly { get; }
 
         /// <summary>
         /// Adds a log to this transcript.

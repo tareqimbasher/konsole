@@ -29,6 +29,11 @@ namespace KonsoleDotNet
         /// to activate transcript logging.
         /// </summary>
         ITranscript Transcript { get; }
+        
+        /// <summary>
+        /// Gets whether transcript logging is enabled for this console.
+        /// </summary>
+        bool TranscriptLoggingEnabled { get; }
 
         /// <summary>
         /// Writes the specified string to the console with the specified foreground and background colors.
@@ -68,6 +73,11 @@ namespace KonsoleDotNet
         /// </summary>
         IKonsole ResetColors();
 
+        /// <summary>
+        /// Starts transcript logging for this console.
+        /// </summary>
+        IKonsole StartTranscriptLogging();
+        
         /// <summary>
         /// Starts transcript logging for this console and sets <see cref="Transcript"/> to the specified transcript.
         /// This method can be called multiple times. Each time it is called, it will use the specified transcript

@@ -15,6 +15,7 @@ namespace KonsoleDotNet
         /// </summary>
         public Konsole()
         {
+            _transcript = new Transcript();
             Defaults = new KonsoleDefaults();
             ForegroundColor = Defaults.DefaultForegroundColor;
             BackgroundColor = Defaults.DefaultBackgroundColor;
@@ -29,15 +30,22 @@ namespace KonsoleDotNet
             Defaults = defaults;
         }
 
+        /// <inheritdoc />
         public virtual ConsoleColor ForegroundColor { get; set; }
 
+        /// <inheritdoc />
         public virtual ConsoleColor BackgroundColor { get; set; }
 
+        /// <inheritdoc />
         public virtual KonsoleDefaults Defaults { get; }
 
-        public virtual ITranscript Transcript { get; }
+        /// <inheritdoc />
+        public virtual ITranscript Transcript => _transcript;
+        
+        /// <inheritdoc />
+        public bool TranscriptLoggingEnabled { get; private set; }
 
-
+        /// <inheritdoc />
         public virtual IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
             var now = DateTime.UtcNow;
@@ -51,7 +59,7 @@ namespace KonsoleDotNet
             Console.ForegroundColor = originalForegroundColor;
             Console.BackgroundColor = originalBackgroundColor;
 
-            _transcript?.Add(text, TranscriptLogType.Output, now);
+            _transcript.Add(text, TranscriptLogType.Output, now);
 
             // Safe guard against exceptions in user-defined PostWriteAction
             try
@@ -66,30 +74,35 @@ namespace KonsoleDotNet
         }
 
 
+        /// <inheritdoc />
         public virtual IKonsole Info(string text)
         {
             Defaults.Info?.Invoke(this.CreateScope(), text);
             return this;
         }
 
+        /// <inheritdoc />
         public virtual IKonsole Debug(string text)
         {
             Defaults.Debug?.Invoke(this.CreateScope(), text);
             return this;
         }
 
+        /// <inheritdoc />
         public virtual IKonsole Warn(string text)
         {
             Defaults.Warn?.Invoke(this.CreateScope(), text);
             return this;
         }
 
+        /// <inheritdoc />
         public virtual IKonsole Error(string text)
         {
             Defaults.Error?.Invoke(this.CreateScope(), text);
             return this;
         }
 
+        /// <inheritdoc />
         public virtual IKonsole ResetColors()
         {
             ForegroundColor = Defaults.DefaultForegroundColor;
@@ -97,16 +110,25 @@ namespace KonsoleDotNet
             return this;
         }
 
-
+        /// <inheritdoc />
+        public virtual IKonsole StartTranscriptLogging()
+        {
+            TranscriptLoggingEnabled = true;
+            return this;
+        }
+        
+        /// <inheritdoc />
         public virtual IKonsole StartTranscriptLogging(ITranscript transcript)
         {
             _transcript = transcript ?? throw new ArgumentNullException(nameof(transcript));
+            TranscriptLoggingEnabled = true;
             return this;
         }
 
+        /// <inheritdoc />
         public virtual IKonsole StopTranscriptLogging()
         {
-            _transcript = null;
+            TranscriptLoggingEnabled = false;
             return this;
         }
     }
