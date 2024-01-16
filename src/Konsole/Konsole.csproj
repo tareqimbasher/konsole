@@ -33,4 +33,10 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Konsole.Roslyn\Konsole.Roslyn.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false" />
+    </ItemGroup>
+
 </Project>

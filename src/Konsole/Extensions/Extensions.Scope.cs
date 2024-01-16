@@ -20,19 +20,14 @@ namespace KonsoleDotNet
         /// <param name="backgroundColor">The background color.</param>
         public static IKonsoleScope WithColors(this IKonsole konsole, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
-            if (konsole is IKonsoleScope scope)
-            {
-                scope.Konsole.ForegroundColor = foregroundColor;
-                scope.Konsole.BackgroundColor = backgroundColor;
-                return scope;
-            }
-            else
+            if (!(konsole is IKonsoleScope scope))
             {
                 scope = new KonsoleScope(konsole);
-                scope.ForegroundColor = foregroundColor;
-                scope.BackgroundColor = backgroundColor;
-                return scope;
             }
+            
+            scope.ForegroundColor = foregroundColor;
+            scope.BackgroundColor = backgroundColor;
+            return scope;
         }
 
         /// <summary>

@@ -4,50 +4,22 @@ using System.Linq;
 
 namespace KonsoleDotNet
 {
-    public static class OutputExtensions
+    public static partial class OutputExtensions
     {
-        /// <summary>
-        /// Writes the specified string to the console with the specified foreground color and the current background color.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        /// <param name="foregroundColor">The foreground color.</param>
-        public static IKonsole Write(this IKonsole konsole, string text, ConsoleColor foregroundColor)
-            => konsole.Write(text, foregroundColor, konsole.BackgroundColor);
-
-        /// <summary>
-        /// Writes the specified string to the console with the current foreground and background colors.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        public static IKonsole Write(this IKonsole konsole, string text) => konsole.Write(text, konsole.ForegroundColor, konsole.BackgroundColor);
-
-        /// <summary>
-        /// Writes the specified string to the console followed by a line terminator with the specified foreground and background colors.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        /// <param name="foregroundColor">The foreground color.</param>
-        /// <param name="backgroundColor">The background color</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
-            => konsole.Write(text + "\n", foregroundColor, backgroundColor);
-
-        /// <summary>
-        /// Writes the specified string to the console followed by a line terminator with the specified foreground color and the current background color.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        /// <param name="foregroundColor">The foreground color.</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor foregroundColor)
-            => konsole.WriteLine(text, foregroundColor, konsole.BackgroundColor);
-
-        /// <summary>
-        /// Writes the specified string to the console followed by a line terminator with the current foreground and background colors.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        public static IKonsole WriteLine(this IKonsole konsole, string text)
-            => konsole.WriteLine(text, konsole.ForegroundColor, konsole.BackgroundColor);
-
         /// <summary>
         /// Writes a line terminator to the console.
         /// </summary>
         public static IKonsole WriteLine(this IKonsole konsole) => konsole.Write("\n");
+
+        /// <summary>
+        /// Writes the specified string to the console and appends a line terminator.
+        /// </summary>
+        public static IKonsole WriteLine(this IKonsole konsole, string text, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null)
+        {
+            konsole.Write(text, foregroundColor, backgroundColor);
+            konsole.Write("\n");
+            return konsole;
+        }
 
         /// <summary>
         /// Clears the console.
@@ -63,10 +35,9 @@ namespace KonsoleDotNet
         /// </summary>
         public static IKonsole ClearCurrentLine(this IKonsole konsole)
         {
-            int currentLineCursor = Console.CursorTop;
-            Console.SetCursorPosition(0, Console.CursorTop);
-            Console.Write(new string(' ', Console.BufferWidth));
-            Console.SetCursorPosition(0, currentLineCursor);
+            Console.CursorLeft = 0;
+            Console.Write(new string(' ', Console.BufferWidth - 1));
+            Console.CursorLeft = 0;
             return konsole;
         }
 
@@ -105,9 +76,10 @@ namespace KonsoleDotNet
         /// </summary>
         /// <param name="list">The list to write.</param>
         /// <param name="bullet">A string representing the bullet symbol.</param>
-        public static IKonsole List(this IKonsole konsole, IEnumerable<string> list, string bullet = "*")
+        /// <param name="indent">Indents each list using this many spaces.</param>
+        public static IKonsole List(this IKonsole konsole, IEnumerable<string> list, string bullet = "*", int indent = 0)
         {
-            string indentation = "   ";
+            string indentation = indent > 0 ? new string(' ', 0) : string.Empty;
             int numberPadding = list.Count().ToString().Length + 2;
             string newLineReplacement = new string(' ', indentation.Length + numberPadding);
 
@@ -134,10 +106,11 @@ namespace KonsoleDotNet
         /// Writes the specified collection of strings to the console in an ordered list format.
         /// </summary>
         /// <param name="list">List to write.</param>
-        public static IKonsole OrderedList(this IKonsole konsole, IEnumerable<string> list)
+        /// <param name="indent">Indents each list using this many spaces.</param>
+        public static IKonsole OrderedList(this IKonsole konsole, IEnumerable<string> list, int indent = 0)
         {
             int listCount = list.Count();
-            string indentation = "   ";
+            string indentation = indent > 0 ? new string(' ', 0) : string.Empty;
             int numberPadding = listCount.ToString().Length + 2;
             string newLineReplacement = new string(' ', indentation.Length + numberPadding);
 

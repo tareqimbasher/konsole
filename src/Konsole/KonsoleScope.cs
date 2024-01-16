@@ -18,64 +18,40 @@ namespace KonsoleDotNet
 
             ForegroundColor = konsole.ForegroundColor;
             BackgroundColor = konsole.BackgroundColor;
-            Defaults = new KonsoleDefaults
+            DefaultSettings = new KonsoleDefaults
             {
-                DefaultForegroundColor = konsole.Defaults.DefaultForegroundColor,
-                DefaultBackgroundColor = konsole.Defaults.DefaultBackgroundColor,
-                Debug = konsole.Defaults.Debug,
-                Info = konsole.Defaults.Info,
-                Warn = konsole.Defaults.Warn,
-                Error = konsole.Defaults.Error,
-                PostWriteAction = konsole.Defaults.PostWriteAction
+                DefaultForegroundColor = konsole.DefaultSettings.DefaultForegroundColor,
+                DefaultBackgroundColor = konsole.DefaultSettings.DefaultBackgroundColor,
+                PostWriteAction = konsole.DefaultSettings.PostWriteAction
             };
         }
 
-        /// <inheritdoc />
         public IKonsole Konsole { get; }
 
-        /// <inheritdoc />
         public ConsoleColor ForegroundColor { get; set; }
 
-        /// <inheritdoc />
         public ConsoleColor BackgroundColor { get; set; }
 
-        /// <inheritdoc />
-        public KonsoleDefaults Defaults { get; }
+        public KonsoleDefaults DefaultSettings { get; }
 
-        /// <inheritdoc />
         public ITranscript Transcript => Konsole.Transcript;
 
-        /// <inheritdoc />
         public bool TranscriptLoggingEnabled => Konsole.TranscriptLoggingEnabled;
 
-        /// <inheritdoc />
-        public IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
-            => Konsole.Write(text, foregroundColor, backgroundColor);
+        public IKonsole Write(string text, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null)
+            => Konsole.Write(text, foregroundColor ?? ForegroundColor, backgroundColor ?? BackgroundColor);
 
-        /// <inheritdoc />
-        public IKonsole Debug(string text) => Konsole.Debug(text);
-        /// <inheritdoc />
-        public IKonsole Info(string text) => Konsole.Info(text);
-        /// <inheritdoc />
-        public IKonsole Warn(string text) => Konsole.Warn(text);
-        /// <inheritdoc />
-        public IKonsole Error(string text) => Konsole.Error(text);
-
-        /// <inheritdoc />
         public IKonsole ResetColors()
         {
-            ForegroundColor = Defaults.DefaultForegroundColor;
-            BackgroundColor = Defaults.DefaultBackgroundColor;
+            ForegroundColor = DefaultSettings.DefaultForegroundColor;
+            BackgroundColor = DefaultSettings.DefaultBackgroundColor;
             return this;
         }
 
-        /// <inheritdoc />
         public IKonsole StartTranscriptLogging() => Konsole.StartTranscriptLogging();
-        
-        /// <inheritdoc />
+
         public IKonsole StartTranscriptLogging(ITranscript transcript) => Konsole.StartTranscriptLogging(transcript);
 
-        /// <inheritdoc />
         public IKonsole StopTranscriptLogging() => Konsole.StopTranscriptLogging();
     }
 }

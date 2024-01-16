@@ -149,7 +149,7 @@ namespace KonsoleDotNet
             while (!prompt(out string selection))
             {
                 konsole.ClearCurrentLine()
-                    .Error(string.IsNullOrWhiteSpace(selection) ? "Please make a selection" : $"Invalid selection: {selection}")
+                    .WriteLine(string.IsNullOrWhiteSpace(selection) ? "Please make a selection" : $"Invalid selection: {selection}", ConsoleColor.Red)
                     .WriteLine();
             }
 

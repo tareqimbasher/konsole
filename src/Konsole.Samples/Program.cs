@@ -11,6 +11,15 @@ namespace KonsoleDotNet.Samples
     {
         static void Main()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            //
+            // Konsole.Default.WriteLine("Hello");
+            // Konsole.Default.WriteLineRed("Red");
+            // Konsole.Default.WriteBlue("Blue").WriteYellow("Yellow").WriteLine();
+            // Konsole.Default.WriteLineYellow("Yellow");
+            //
+            // return;
+            //
             IKonsole console = new Konsole();
 
             BasicUsage(console);
@@ -24,7 +33,7 @@ namespace KonsoleDotNet.Samples
             console.WriteLine("Sample 1: The Basics").WriteDivider();
             console.WriteLine("1. Text with default colors.");
             console.WithForeColor(ConsoleColor.Cyan).WriteLine("2. Cyan text on the default background color");
-            console.WithBackColor(ConsoleColor.Blue).WriteLine("3. Default text color on a blue background");
+            console.WithBackColor(ConsoleColor.DarkBlue).WriteLine("3. Default text color on a dark blue background");
             console.WithColors(ConsoleColor.Black, ConsoleColor.Red).WriteLine("4. Black text on a red background");
 
             console.ForegroundColor = ConsoleColor.Red;
@@ -34,7 +43,7 @@ namespace KonsoleDotNet.Samples
 
 
             // Sample 2
-            console.ResetColors().WriteLine("\nSample 2: Ice Cream Menu");
+            console.ResetColors().WriteLine().WriteLine("Sample 2: Ice Cream Menu");
             console
                 .WithForeColor(ConsoleColor.Green)
                 .WriteDivider()
@@ -93,7 +102,7 @@ namespace KonsoleDotNet.Samples
             tasks.ForEach(t => t.Start());
             Task.WaitAll(tasks.ToArray());
 
-            console.WriteLine().Info("Loading is complete!").WriteLine();
+            console.WriteLine().WriteLine("Loading is complete!", ConsoleColor.White).WriteLine();
         }
 
         private static void Work(ProgressBar progressBar, int progressDuration)

@@ -21,7 +21,7 @@ namespace KonsoleDotNet
         /// <summary>
         /// The defaults this console uses.
         /// </summary>
-        KonsoleDefaults Defaults { get; }
+        KonsoleDefaults DefaultSettings { get; }
 
         /// <summary>
         /// If transcript logging is active, this is the transcript this console is logging to. This property
@@ -29,7 +29,7 @@ namespace KonsoleDotNet
         /// to activate transcript logging.
         /// </summary>
         ITranscript Transcript { get; }
-        
+
         /// <summary>
         /// Gets whether transcript logging is enabled for this console.
         /// </summary>
@@ -41,32 +41,8 @@ namespace KonsoleDotNet
         /// <param name="text">The value to write.</param>
         /// <param name="foregroundColor">The foreground color.</param>
         /// <param name="backgroundColor">The background color</param>
-        IKonsole Write(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor);
-
-
-        /// <summary>
-        /// Writes text as info output.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        IKonsole Info(string text);
-
-        /// <summary>
-        /// Writes text as debug output.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        IKonsole Debug(string text);
-
-        /// <summary>
-        /// Writes text as warning output.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        IKonsole Warn(string text);
-
-        /// <summary>
-        /// Writes text as error output.
-        /// </summary>
-        /// <param name="text">The value to write.</param>
-        IKonsole Error(string text);
+        IKonsole Write(string text, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null);
+        //IKonsole Write(char text, ConsoleColor foregroundColor, ConsoleColor backgroundColor);
 
         /// <summary>
         /// Resets this console's colors to their default setting.
@@ -77,7 +53,7 @@ namespace KonsoleDotNet
         /// Starts transcript logging for this console.
         /// </summary>
         IKonsole StartTranscriptLogging();
-        
+
         /// <summary>
         /// Starts transcript logging for this console and sets <see cref="Transcript"/> to the specified transcript.
         /// This method can be called multiple times. Each time it is called, it will use the specified transcript
