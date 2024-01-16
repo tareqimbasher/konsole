@@ -8,6 +8,9 @@ namespace KonsoleDotNet
     /// </summary>
     public class Konsole : IKonsole
     {
+        private static readonly Lazy<Konsole> _lazy = new Lazy<Konsole>(() => new Konsole());
+        public static Konsole Default => _lazy.Value;
+        
         private ITranscript _transcript;
 
         /// <summary>
