@@ -12,15 +12,15 @@ namespace KonsoleDotNet
         /// <summary>
         /// Ask user for input, returned as a string.
         /// </summary>
-        /// <param name="question">The text to display to user.</param>
-        public static string Ask(this IKonsole konsole, string question) => Ask<string>(konsole, question);
+        /// <param name="text">The text to display to user.</param>
+        public static string Prompt(this IKonsole konsole, string text) => Prompt<string>(konsole, text);
 
         /// <summary>
         /// Ask user for input and convert input to <typeparamref name="TReturn"/>.
         /// </summary>
         /// <typeparam name="TReturn">The type to convert user input into.</typeparam>
-        /// <param name="question">The text to display to user.</param>
-        public static TReturn Ask<TReturn>(this IKonsole konsole, string question)
+        /// <param name="text">The text to display to user.</param>
+        public static TReturn Prompt<TReturn>(this IKonsole konsole, string text)
         {
             var cursorInitTopPosition = Console.CursorTop;
 
@@ -32,7 +32,7 @@ namespace KonsoleDotNet
             while (input == null)
             {
                 Console.SetCursorPosition(0, cursorInitTopPosition);
-                konsole.ClearCurrentLine().Write($"- {question} ");
+                konsole.ClearCurrentLine().Write($"- {text} ");
                 input = konsole.ReadLine().Trim();
 
                 if (string.IsNullOrWhiteSpace(input))
@@ -58,20 +58,20 @@ namespace KonsoleDotNet
         /// <summary>
         /// Ask user to select from a group of options.
         /// </summary>
-        /// <param name="question">The text to display to user.</param>
+        /// <param name="text">The text to display to user.</param>
         /// <param name="options">Options the user must select from.</param>
         /// <returns>Selected options.</returns>
-        public static IEnumerable<string> Ask(this IKonsole konsole, string question, IEnumerable<string> options)
-            => Ask(konsole, question, options, x => x);
+        public static IEnumerable<string> Prompt(this IKonsole konsole, string text, IEnumerable<string> options)
+            => Prompt(konsole, text, options, x => x);
 
         /// <summary>
         /// Ask user to select from a group of options.
         /// </summary>
-        /// <param name="question">The text to display to user.</param>
+        /// <param name="text">The text to display to user.</param>
         /// <param name="options">Options the user must select from.</param>
         /// <param name="optionFormatter">A function that returns a string representation of each option.</param>
         /// <returns>Selected options.</returns>
-        public static IEnumerable<T> Ask<T>(this IKonsole konsole, string question, IEnumerable<T> options, Func<T, string> optionFormatter)
+        public static IEnumerable<T> Prompt<T>(this IKonsole konsole, string text, IEnumerable<T> options, Func<T, string> optionFormatter)
         {
             if (optionFormatter == null)
                 throw new ArgumentNullException(nameof(optionFormatter));
@@ -97,7 +97,7 @@ namespace KonsoleDotNet
                 selectedOptionIndicies.Clear();
 
                 Console.SetCursorPosition(0, cursorInitTopPosition);
-                konsole.WriteLine($"- {question}")
+                konsole.WriteLine($"- {text}")
                     .OrderedList(optionsArr.Select(o => optionFormatter(o)))
                     .WriteLine();
 
@@ -161,13 +161,13 @@ namespace KonsoleDotNet
 
 
         /// <summary>
-        /// Ask user to yes/no question with no default answer.
+        /// Ask user to yes/no text with no default answer.
         /// </summary>
         /// <param name="text">The text to display to user.</param>
         public static bool Confirm(this IKonsole konsole, string text) => Confirm(konsole, text, null);
 
         /// <summary>
-        /// Ask user to yes/no question with a default answer.
+        /// Ask user to yes/no text with a default answer.
         /// </summary>
         /// <param name="text">The text to display to user.</param>
         /// <param name="defaultAnswer">The default answer if the user hits ENTER without specifying an answer.</param>

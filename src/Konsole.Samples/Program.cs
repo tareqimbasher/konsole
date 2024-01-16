@@ -1,11 +1,9 @@
-﻿using KonsoleDotNet.ProgressBars;
-using KonsoleDotNet.Transcripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using KonsoleDotNet.ProgressBars;
 
 namespace KonsoleDotNet.Samples
 {
@@ -64,11 +62,11 @@ namespace KonsoleDotNet.Samples
 
         private static void Prompts(IKonsole console)
         {
-            string name = console.Ask("What is your name?");
-            DateTime birthDate = console.Ask<DateTime>("What is your birth date?");
+            string name = console.Prompt("What is your name?");
+            DateTime birthDate = console.Prompt<DateTime>("What is your birth date?");
             bool hasPets = console.Confirm("Do you have any pets?");
-            int power = console.Ask<int>("What is Goku's power level?");
-            var favs = console.Ask("What are your favorite programming languages:", new[] { "C#", "JavaScript", "Python", "COBOL", "Ruby" });
+            int power = console.Prompt<int>("What is Goku's power level?");
+            var favs = console.Prompt("What are your favorite programming languages:", new[] { "C#", "JavaScript", "Python", "COBOL", "Ruby" });
 
             console
                 .WithForeColor(ConsoleColor.Cyan).WriteLine("\nProfile").WriteDivider().ResetColors()
